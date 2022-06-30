@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   numberOfSides: 3
   componentPrefab: {fileID: 3159191026963272408, guid: 0e1421deabc049d47a60253bf76794f0, type: 3}
-  spawnDelay: 1
+  spawnDelay: 0.25
   componentGap: 0.15
   automaticSpawning: 1
 --- !u!1 &8419951655230628298

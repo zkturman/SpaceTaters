@@ -19,7 +19,7 @@ public class MonsterMaker : MonoBehaviour
             Destroy(monsterInstance);
         }
         monsterInstance = Instantiate(monsterToSpawn);
-        monsterInstance.transform.position = randomiseMonsterPosition();
+        monsterInstance.transform.position = Vector3.zero;//randomiseMonsterPosition();
     }
 
     private Vector3 randomiseMonsterPosition()

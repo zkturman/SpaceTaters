@@ -17,10 +17,11 @@ public class GeometryTransformer
         }
         else
         {
-            //SpriteRenderer componentBox = geometricShape.GetComponent<SpriteRenderer>();
             float boxHeight = geometricShape.transform.localScale.y;
             float centroidY = (boxHeight / 2f) - GetCentroidHeight(numSides);
-            return new Vector3(0f, -centroidY, 0f);
+            Vector3 baseCentroid = new Vector3(0f, -centroidY, 0f);
+            Vector3 currentCentroid = geometricShape.transform.rotation * baseCentroid + geometricShape.transform.position;
+            return currentCentroid;
         }
     }
 

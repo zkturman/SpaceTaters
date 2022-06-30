@@ -32,7 +32,7 @@ public class GeonicBehaviour : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (canSpawn && automaticSpawning)
         {
@@ -61,11 +61,26 @@ public class GeonicBehaviour : MonoBehaviour
         GameObject childObject = spawningComponent.SpawnChild(componentPrefab, componentGap);
         childObject.GetComponent<GeonicComponentBehaviour>().SetSpriteColor(Color.green);
         availableComponents.Add(childObject);
-        if (!spawningComponent.CanSpawnChild())
-        {
-            spawningComponent.SetSpriteColor(Color.red);
-            availableComponents.RemoveAt(diceRoll);
-        }
+        updateAvailableComponents();
         canSpawn = true;
+    }
+
+    private void updateAvailableComponents()
+    {
+        List<GameObject> newAvailableComponents = new List<GameObject>();
+        for (int i = 0; i < availableComponents.Count; i++)
+        {
+            GameObject spawningObject = availableComponents[i];
+            GeonicComponentBehaviour spawningComponent = spawningObject.GetComponent<GeonicComponentBehaviour>();
+            if (spawningComponent.CanSpawnChild())
+            {
+                newAvailableComponents.Add(spawningObject); 
+            }
+            else
+            {
+                spawningComponent.SetSpriteColor(Color.red);
+            }
+        }
+        availableComponents = newAvailableComponents;
     }
 }

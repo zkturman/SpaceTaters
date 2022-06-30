@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text;
 
 public class GeonicComponentBehaviour : MonoBehaviour
 {
     [SerializeField]
     private int numberOfSides;
+    public int NumberOfSides
+    {
+        get => numberOfSides;
+    }
     GeonicComponentBehaviour[] neighbouringComponents;
     List<int> availableEdges;
     GeometryTransformer geometryTransformer;
@@ -26,6 +31,7 @@ public class GeonicComponentBehaviour : MonoBehaviour
     {
         this.numberOfSides = numberOfSides;
         neighbouringComponents = new GeonicComponentBehaviour[numberOfSides];
+        geometryTransformer = new GeometryTransformer(gameObject);
         availableEdges = new List<int>();
         for (int i = 1; i <= neighbouringComponents.Length; i++)
         {
@@ -65,8 +71,9 @@ public class GeonicComponentBehaviour : MonoBehaviour
         childBehaviour.SpawnComponent(numberOfSides, this);
         childBehaviour.RotateToEdge(availableEdges[diceRoll]);
         childBehaviour.TranslateToEdge(gapSize);
-        neighbouringComponents[availableEdges[diceRoll] - 1] = childBehaviour;
-        availableEdges.RemoveAt(diceRoll);
+        Physics.SyncTransforms();
+        childBehaviour.UpdateNeighbours(gapSize);
+        this.UpdateNeighbours(gapSize);
         return childComponent;
     }
 
@@ -79,7 +86,7 @@ public class GeonicComponentBehaviour : MonoBehaviour
     public void RotateToEdge(int edgeNumber)
     {
         float angleToRotate = geometryTransformer.GetShapeRotation(edgeNumber, numberOfSides);
-        Vector3 rotationPoint = transform.rotation * geometryTransformer.GetCentroid(numberOfSides) + transform.position;
+        Vector3 rotationPoint = geometryTransformer.GetCentroid(numberOfSides);
         transform.RotateAround(rotationPoint, Vector3.forward, angleToRotate);
     }
 
@@ -88,29 +95,73 @@ public class GeonicComponentBehaviour : MonoBehaviour
         return availableEdges.Count > 0;
     }
 
+    public string GetAvailableEdges()
+    {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < availableEdges.Count; i++)
+        {
+            builder.Append(availableEdges[i]);
+            if (i < availableEdges.Count - 1)
+            {
+                builder.Append(",");
+            }
+        }
+        return builder.ToString();
+    }
+
     public void SetSpriteColor(Color colorToSet)
     {
         SpriteRenderer componentSprite = GetComponent<SpriteRenderer>();
         componentSprite.color = colorToSet;
     }
 
-    private void OnDrawGizmosSelected()
+    public void UpdateNeighbours(float gapSize)
     {
-        GeometryTransformer transformer = new GeometryTransformer(gameObject);
-        Gizmos.color = Color.cyan;
-        Vector3 centroid = transformer.GetCentroid(numberOfSides);
-        Vector3 untranslatedCentroid = transform.rotation * centroid;
-        Gizmos.DrawLine(untranslatedCentroid, centroid);
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawSphere(untranslatedCentroid, 0.1f);
-        Gizmos.color = Color.yellow;
-        Vector3 componentCentroid = untranslatedCentroid + transform.position;
-        Gizmos.DrawSphere(componentCentroid, 0.1f);
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(componentCentroid, Quaternion.Euler(0, 0, 60) * transform.up * 0.5f);
-        Gizmos.DrawRay(componentCentroid, Quaternion.Euler(0, 0, 180) * transform.up * 0.5f);
-        Gizmos.DrawRay(componentCentroid, Quaternion.Euler(0, 0, 300) * transform.up * 0.5f);
+        Vector3 centroid = geometryTransformer.GetCentroid(numberOfSides);
+        float castDistance = geometryTransformer.GetCentroidHeight(numberOfSides) * 2 + gapSize;
+        int[] edgeDataCopy = availableEdges.ToArray(); 
+        for (int i = 0; i < edgeDataCopy.Length; i++)
+        {
+            int edge = edgeDataCopy[i];
+            Vector3 castDirection = Quaternion.Euler(0, 0, geometryTransformer.GetShapeRotation(edge, numberOfSides)) * transform.up;
+            RaycastHit[] allHits = Physics.RaycastAll(centroid, castDirection, castDistance);
+            if (neighboursComponent(allHits))
+            {
+                GeonicComponentBehaviour neighbourComponent = getNeighbourComponetFromRayCast(allHits);
+                neighbouringComponents[edge - 1] = neighbourComponent;
+                availableEdges.RemoveAt(i);
+                neighbourComponent.UpdateNeighbours(gapSize);
+            }
+        }
+    }
 
+    private bool neighboursComponent(RaycastHit[] nearbyHits)
+    {
+        bool hitNeighbour = false;
+        for (int i = 0; i < nearbyHits.Length; i++)
+        {
+            if (nearbyHits[i].collider.gameObject != this)
+            {
+                hitNeighbour = true;
+            }
+        }
+        return hitNeighbour;
+    }
 
+    private GeonicComponentBehaviour getNeighbourComponetFromRayCast(RaycastHit[] nearbyHits)
+    {
+        GeonicComponentBehaviour componentNeighbour = null;
+        for (int i = 0; i < nearbyHits.Length; i++)
+        {
+            Collider colliderToTest = nearbyHits[i].collider;
+            if (colliderToTest.gameObject != this)
+            {
+                if (colliderToTest.TryGetComponent<GeonicComponentBehaviour>(out GeonicComponentBehaviour testBehaviour))
+                {
+                    componentNeighbour = testBehaviour;
+                }
+            }
+        }
+        return componentNeighbour;
     }
 }
