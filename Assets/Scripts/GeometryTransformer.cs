@@ -17,8 +17,8 @@ public class GeometryTransformer
         }
         else
         {
-            float boxHeight = geometricShape.transform.localScale.y;
-            float centroidY = (boxHeight / 2f) - GetCentroidHeight(numSides);
+            float boxHeight = Mathf.Abs(geometricShape.transform.lossyScale.y);
+            float centroidY = Mathf.Abs((boxHeight / 2f) - GetCentroidHeight(numSides));
             Vector3 baseCentroid = new Vector3(0f, -centroidY, 0f);
             Vector3 currentCentroid = geometricShape.transform.rotation * baseCentroid + geometricShape.transform.position;
             return currentCentroid;
@@ -30,13 +30,13 @@ public class GeometryTransformer
 
         if (isEven(numSides))
         {
-            return (geometricShape.transform.localScale.y) / 2f;
+            return Mathf.Abs((geometricShape.transform.lossyScale.y) / 2f);
         }
         else
         {
             float bisectedCentroidAngle = findCentroidAngle(numSides) / 2f;
             float angleInRadians = bisectedCentroidAngle * Mathf.PI / 180f;
-            float centroidHeight = geometricShape.transform.localScale.x / (2 * Mathf.Tan(angleInRadians));
+            float centroidHeight = Mathf.Abs(geometricShape.transform.lossyScale.x) / (2 * Mathf.Tan(angleInRadians));
             return centroidHeight;
         }
     }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2754956845016870074}
   - component: {fileID: 189892084754985065}
   m_Layer: 0
-  m_Name: TriGeonicPrefab
+  m_Name: DiaGeonicPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2754956845016870072}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children:
   - {fileID: 5831958912816119884}
   m_Father: {fileID: 0}
@@ -44,10 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 267abdaaf6bf327448b9a1588b31e0e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfSides: 3
-  componentPrefab: {fileID: 3159191026963272408, guid: 0e1421deabc049d47a60253bf76794f0, type: 3}
+  numberOfSides: 4
+  componentParentObject: {fileID: 8419951655230628298}
+  componentPrefab: {fileID: 3159191026963272408, guid: c917be97165da064b8f3b7a455c93236, type: 3}
   spawnDelay: 0.25
-  componentGap: 0.15
+  componentGap: 0.04
   automaticSpawning: 1
 --- !u!1 &8419951655230628298
 GameObject:

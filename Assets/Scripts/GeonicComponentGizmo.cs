@@ -31,7 +31,7 @@ public class GeonicComponentGizmo : MonoBehaviour
 
     private void drawRaysToNeighbour()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.cyan;
         Vector3 centroid = geometryTransformer.GetCentroid(numberOfSides);
         for (int i = 1; i <= numberOfSides; i++)
         {
@@ -40,6 +40,7 @@ public class GeonicComponentGizmo : MonoBehaviour
             Vector3 rayDirection = rotationToEdge * transform.up;
             float rayMagnitude = geometryTransformer.GetCentroidHeight(numberOfSides) * 2 + .15f;
             Gizmos.DrawRay(centroid, rayDirection * rayMagnitude);
+            Gizmos.color = Color.red;
         }
     }
 

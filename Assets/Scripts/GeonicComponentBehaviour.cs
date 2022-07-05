@@ -7,6 +7,8 @@ public class GeonicComponentBehaviour : MonoBehaviour
 {
     [SerializeField]
     private int numberOfSides;
+    [SerializeField]
+    private Color baseColor;
     public int NumberOfSides
     {
         get => numberOfSides;
@@ -16,15 +18,25 @@ public class GeonicComponentBehaviour : MonoBehaviour
     GeometryTransformer geometryTransformer;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        ResetSpriteColor();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        performSpriteAction();
+    }
+
+    private void performSpriteAction()
+    {
+        int diceRoll = Random.Range(0, 2000);
+        if (diceRoll == 0)
+        {
+            Animator componentSpinner = GetComponentInChildren<Animator>();
+            componentSpinner.SetTrigger("Rotate");
+        }
     }
 
     public void SpawnRootComponent(int numberOfSides)
@@ -54,6 +66,11 @@ public class GeonicComponentBehaviour : MonoBehaviour
                 availableEdges.Add(i);
             }
         }
+    }
+    
+    public void CustomiseAvailableEdges(List<int> newEdges)
+    {
+        availableEdges = newEdges;
     }
 
     private int getEdgeConnectingToParent()
@@ -109,9 +126,14 @@ public class GeonicComponentBehaviour : MonoBehaviour
         return builder.ToString();
     }
 
+    public void ResetSpriteColor()
+    {
+        SetSpriteColor(baseColor);
+    }
+
     public void SetSpriteColor(Color colorToSet)
     {
-        SpriteRenderer componentSprite = GetComponent<SpriteRenderer>();
+        SpriteRenderer componentSprite = GetComponentInChildren<SpriteRenderer>();
         componentSprite.color = colorToSet;
     }
 
@@ -129,7 +151,7 @@ public class GeonicComponentBehaviour : MonoBehaviour
             {
                 GeonicComponentBehaviour neighbourComponent = getNeighbourComponetFromRayCast(allHits);
                 neighbouringComponents[edge - 1] = neighbourComponent;
-                availableEdges.RemoveAt(i);
+                availableEdges.Remove(edge);
                 neighbourComponent.UpdateNeighbours(gapSize);
             }
         }
