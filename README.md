@@ -7,6 +7,10 @@ In this arcade-adventure game, you will play as the space-potato-farmer Jeb. The
 
 Unfortunately, an experimental genetic mutation has gone horrible wrong, and evil starch have started attacking the colony! Using your potatoes as weapons, you'll navigate a 2.5D world and defend your food, and your colony!
 
+### July 2022 Dev Updates
+#### Monster Behaviour System
+https://user-images.githubusercontent.com/72808903/178996342-bfebe52b-f92a-4f85-bc75-2eaba59ec9b5.mp4
+
 ### June 2022 Dev Updates
 
 #### Procedurally Generated Monster Prototype
