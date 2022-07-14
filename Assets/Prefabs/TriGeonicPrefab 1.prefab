@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2754956845016870074}
   - component: {fileID: 189892084754985065}
+  - component: {fileID: -295815227418228869}
   m_Layer: 0
   m_Name: TriGeonicPrefab 1
   m_TagString: Untagged
@@ -47,9 +48,30 @@ MonoBehaviour:
   numberOfSides: 3
   componentParentObject: {fileID: 8419951655230628298}
   componentPrefab: {fileID: 3159191026963272408, guid: 0e1421deabc049d47a60253bf76794f0, type: 3}
-  spawnDelay: 0.25
+  spawnDelay: 0.1
   componentGap: 0.04
+  maxComponents: 50
   automaticSpawning: 1
+  newComponentColor: {r: 1, g: 0.9520369, b: 0.5137255, a: 1}
+  spawningComponentColor: {r: 0.8962264, g: 0.5707102, b: 0.7084465, a: 1}
+  completeComponentColor: {r: 0.8773585, g: 0.7176598, b: 0.19450872, a: 1}
+--- !u!114 &-295815227418228869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2754956845016870072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0448052c76e55904b851f1c16b4f06e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanMove: 0
+  minRotation: -75
+  maxRotation: 75
+  spinDuration: 2
+  movementSequence: 000000000000000001000000000000000100000001000000
 --- !u!1 &8419951655230628298
 GameObject:
   m_ObjectHideFlags: 0

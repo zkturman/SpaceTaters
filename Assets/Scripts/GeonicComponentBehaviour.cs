@@ -26,17 +26,7 @@ public class GeonicComponentBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        performSpriteAction();
-    }
-
-    private void performSpriteAction()
-    {
-        int diceRoll = Random.Range(0, 2000);
-        if (diceRoll == 0)
-        {
-            Animator componentSpinner = GetComponentInChildren<Animator>();
-            componentSpinner.SetTrigger("Rotate");
-        }
+        //performSpriteAction();
     }
 
     public void SpawnRootComponent(int numberOfSides)

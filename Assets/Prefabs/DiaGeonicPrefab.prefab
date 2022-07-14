@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2754956845016870074}
   - component: {fileID: 189892084754985065}
+  - component: {fileID: 3426971619576865487}
   m_Layer: 0
   m_Name: DiaGeonicPrefab
   m_TagString: Untagged
@@ -49,7 +50,28 @@ MonoBehaviour:
   componentPrefab: {fileID: 3159191026963272408, guid: c917be97165da064b8f3b7a455c93236, type: 3}
   spawnDelay: 0.25
   componentGap: 0.04
+  maxComponents: 30
   automaticSpawning: 1
+  newComponentColor: {r: 0.748932, g: 0.9622642, b: 0.91795594, a: 1}
+  spawningComponentColor: {r: 0.9716981, g: 0.79330075, b: 0.48126557, a: 1}
+  completeComponentColor: {r: 0.2776789, g: 0.9056604, b: 0.7354598, a: 1}
+--- !u!114 &3426971619576865487
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2754956845016870072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0448052c76e55904b851f1c16b4f06e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanMove: 0
+  minRotation: -75
+  maxRotation: 75
+  spinDuration: 2
+  movementSequence: 00000000
 --- !u!1 &8419951655230628298
 GameObject:
   m_ObjectHideFlags: 0

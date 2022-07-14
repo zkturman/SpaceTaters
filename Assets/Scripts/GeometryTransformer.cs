@@ -17,9 +17,7 @@ public class GeometryTransformer
         }
         else
         {
-            float boxHeight = Mathf.Abs(geometricShape.transform.lossyScale.y);
-            float centroidY = Mathf.Abs((boxHeight / 2f) - GetCentroidHeight(numSides));
-            Vector3 baseCentroid = new Vector3(0f, -centroidY, 0f);
+            Vector3 baseCentroid = Vector3.zero;
             Vector3 currentCentroid = geometricShape.transform.rotation * baseCentroid + geometricShape.transform.position;
             return currentCentroid;
         }

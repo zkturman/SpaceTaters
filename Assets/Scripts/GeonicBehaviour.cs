@@ -15,17 +15,29 @@ public class GeonicBehaviour : MonoBehaviour
     protected float spawnDelay = 1f;
     [SerializeField]
     protected float componentGap = 0.15f;
+    [SerializeField]
+    protected int maxComponents = 30;
+    protected int numberOfComponents = 0;
     private bool canSpawn = false;
 
     [SerializeField]
     protected bool automaticSpawning = true;
+    [SerializeField]
+    protected Color newComponentColor = Color.green;
+    [SerializeField]
+    protected Color spawningComponentColor = Color.yellow;
+    [SerializeField]
+    protected Color completeComponentColor = Color.red;
     private float health;
     protected List<GameObject> availableComponents;
+    protected List<GameObject> allComponents;
+    private bool inExpandMode = false;
 
     // Start is called before the first frame update
     void Start()
     {
         availableComponents = new List<GameObject>();
+        allComponents = new List<GameObject>();
         GameObject rootObject = Instantiate(componentPrefab, componentParentObject.transform);
         rootComponent = rootObject.GetComponent<GeonicComponentBehaviour>();
         availableComponents.Add(rootObject);
@@ -36,10 +48,38 @@ public class GeonicBehaviour : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (canSpawn && automaticSpawning)
+        if (inSpawningMode())
         {
             StartCoroutine(spawnChildRoutine());
         }
+
+        if (!underMaximumComponents() && !inExpandMode)
+        {
+            enterExpandMode();
+        }
+    }
+
+    private void enterExpandMode()
+    {
+        inExpandMode = true;
+        for (int i = 0; i < allComponents.Count; i++)
+        {
+            GeonicComponentMovement component = allComponents[i].GetComponent<GeonicComponentMovement>();
+            component.ShouldExpand = true;
+            component.ID = i;
+        }
+        GetComponent<GeonicMoveController>().CanMove = true;
+    }
+
+    private bool inSpawningMode()
+    {
+        bool underMaximum = underMaximumComponents();
+        return canSpawn && automaticSpawning && underMaximum;
+    }
+
+    protected virtual bool underMaximumComponents()
+    {
+        return numberOfComponents < maxComponents;
     }
 
     private IEnumerator spawnChildRoutine()
@@ -74,7 +114,7 @@ public class GeonicBehaviour : MonoBehaviour
             int diceRoll = Random.Range(0, availableComponents.Count);
             GameObject spawningObject = availableComponents[diceRoll];
             spawningComponent = spawningObject.GetComponent<GeonicComponentBehaviour>();
-            spawningComponent.SetSpriteColor(Color.yellow);
+            spawningComponent.SetSpriteColor(spawningComponentColor);
         }
         return spawningComponent;
     }
@@ -83,8 +123,10 @@ public class GeonicBehaviour : MonoBehaviour
     {
         GameObject childObject = parentComponent.SpawnChild(componentPrefab, componentGap);
         childObject.transform.SetParent(componentParentObject.transform);
-        childObject.GetComponent<GeonicComponentBehaviour>().SetSpriteColor(Color.green);
+        childObject.GetComponent<GeonicComponentBehaviour>().SetSpriteColor(newComponentColor);
         availableComponents.Add(childObject);
+        allComponents.Add(childObject);
+        numberOfComponents++;
     }
 
     protected virtual void updateAvailableComponents()
@@ -100,7 +142,7 @@ public class GeonicBehaviour : MonoBehaviour
             }
             else
             {
-                spawningComponent.SetSpriteColor(Color.red);
+                spawningComponent.SetSpriteColor(completeComponentColor);
             }
         }
         availableComponents = newAvailableComponents;

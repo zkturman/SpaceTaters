@@ -6,6 +6,19 @@ public class PentaGeonicBehaviour : GeonicBehaviour
 {
     [SerializeField] List<int> customGenerationEdges = new List<int>();
 
+    protected override bool underMaximumComponents()
+    {
+        bool underMaximum = true;
+        if (availableComponents.Count == 0)
+        {
+            if (allComponents.Count > 0)
+            {
+                underMaximum = false;
+            }
+        }
+        return underMaximum;
+    }
+
     protected override void spawnNewChild(GeonicComponentBehaviour parentComponent)
     {
         if (parentComponent != null)
@@ -15,8 +28,10 @@ public class PentaGeonicBehaviour : GeonicBehaviour
             GeonicComponentBehaviour childComponent = childObject.GetComponent<GeonicComponentBehaviour>();
             List<int> customEdges = new List<int>(customGenerationEdges);
             childComponent.CustomiseAvailableEdges(customEdges);
-            childComponent.SetSpriteColor(Color.green);
+            childComponent.SetSpriteColor(newComponentColor);
             availableComponents.Add(childObject);
+            allComponents.Add(childObject);
+            numberOfComponents++;
         }
     }
 
@@ -34,7 +49,7 @@ public class PentaGeonicBehaviour : GeonicBehaviour
             }
             else
             {
-                spawningComponent.SetSpriteColor(Color.red);
+                spawningComponent.SetSpriteColor(completeComponentColor);
             }
         }
         availableComponents = newAvailableComponents;

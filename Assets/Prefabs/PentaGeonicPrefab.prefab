@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2754956845016870074}
   - component: {fileID: 8169805686889417954}
+  - component: {fileID: 3390453855941540757}
   m_Layer: 0
   m_Name: PentaGeonicPrefab
   m_TagString: Untagged
@@ -49,8 +50,29 @@ MonoBehaviour:
   componentPrefab: {fileID: 3159191026963272408, guid: ef18a3015b8e695418d4a7b9189a265d, type: 3}
   spawnDelay: 0.1
   componentGap: 0.04
+  maxComponents: 30
   automaticSpawning: 1
+  newComponentColor: {r: 0.9708871, g: 0.7122642, b: 1, a: 1}
+  spawningComponentColor: {r: 0.82322276, g: 0.9528302, b: 0.35506406, a: 1}
+  completeComponentColor: {r: 0.9245283, g: 0.36196154, b: 0.86479163, a: 1}
   customGenerationEdges: 01000000
+--- !u!114 &3390453855941540757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2754956845016870072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0448052c76e55904b851f1c16b4f06e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanMove: 0
+  minRotation: -75
+  maxRotation: 75
+  spinDuration: 2
+  movementSequence: 01000000010000000100000003000000
 --- !u!1 &8419951655230628298
 GameObject:
   m_ObjectHideFlags: 0

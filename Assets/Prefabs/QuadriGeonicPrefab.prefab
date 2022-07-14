@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2754956845016870074}
   - component: {fileID: 189892084754985065}
+  - component: {fileID: 8146027398103172009}
   m_Layer: 0
   m_Name: QuadriGeonicPrefab
   m_TagString: Untagged
@@ -49,7 +50,28 @@ MonoBehaviour:
   componentPrefab: {fileID: 3159191026963272408, guid: a87c307eef95a7840ab7bb4d8d86ce45, type: 3}
   spawnDelay: 0.25
   componentGap: 0.04
+  maxComponents: 30
   automaticSpawning: 1
+  newComponentColor: {r: 0.74009144, g: 0.63372195, b: 0.9528302, a: 1}
+  spawningComponentColor: {r: 0.9433962, g: 0.9130225, b: 0.5206479, a: 1}
+  completeComponentColor: {r: 0.45319653, g: 0.25490195, b: 0.98039216, a: 1}
+--- !u!114 &8146027398103172009
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2754956845016870072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0448052c76e55904b851f1c16b4f06e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CanMove: 0
+  minRotation: -75
+  maxRotation: 75
+  spinDuration: 2
+  movementSequence: 010000000000000003000000
 --- !u!1 &8419951655230628298
 GameObject:
   m_ObjectHideFlags: 0
